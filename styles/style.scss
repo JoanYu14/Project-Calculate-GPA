@@ -1,0 +1,260 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+ul {
+  list-style-type: none;
+}
+
+a {
+  // 把底線去除
+  text-decoration: none;
+  color: white;
+}
+
+.btn {
+  padding: 0.5rem 0.75rem;
+  border: none;
+  margin: 1rem 0.5rem;
+  // 當游標移到btn區塊時cursor(游標)形狀變成pointer
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+body {
+  background-color: #272727;
+  color: white;
+  // 改變字體樣式
+  font-family: "Rubik", cursive;
+
+  section.animation-wrapper {
+    // 因為在動畫結束前我們不希望看到網頁的內容，此區塊要遮住整個網頁，所以用fixed
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
+
+    section.animation {
+      // 因為此區塊上下要有不能超過的地方，需要給一個框架，於是就設定margin與height
+      // 設定上margin讓此區塊與上面有固定10vh的間隔
+      margin-top: 10vh;
+      // 因為此區塊的高度為80vh，100-80-10 = 10，所以與下方自動就會有10vh的距離(如果設定為70vh那下方就會有20vh的距離，上方是設定margin所以不會變)
+      // 上方margin如果設定為margin: 10vh 0vh，也會有同樣的效果，只是下方也會變成固定的
+      height: 80vh;
+      // 紅色就是邊框，圖片不能超過這個邊框，現在顯示是debug用
+      // border: 5px solid red;
+      display: flex;
+      // 設定justify-content和align-items都為center讓區塊內的flex item(.hero)水平與垂直都置中
+      justify-content: center;
+      align-items: center;
+
+      .hero {
+        // 這個邊框是debug用，框內就是圖片
+        // border: 5px solid green;
+        // 寬度一開始就設定為填滿
+        width: 100%;
+        // 因為希望動畫一開始圖片高度為0，後面慢慢變大，所以這裡先設定0
+        height: 0;
+        img {
+          // 圖片填滿.hero
+          width: 100%;
+          height: 100%;
+          // object-fit是用來指定應如何調整 <img> 或 <video> 的大小以適合其容器。cover是保持其縱橫比並填充給定的尺寸。
+          object-fit: cover;
+        }
+      }
+    }
+
+    .slider {
+      // absolute定位參考是參考離他最近的position element(section.animation-wrapper)
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      // 設定slider的背景為從左邊到右邊由灰色漸變到黑色
+      background: linear-gradient(
+        to right,
+        rgb(144, 144, 144),
+        rgb(0, 0, 0)
+      ); // 設定z-index為-1讓sllider不會蓋過其他東西(只有position elemenrt可以設定z-index)
+      z-index: -1;
+    }
+  }
+
+  header {
+    nav {
+      box-shadow: 0 8px 6px -6px black;
+      ul {
+        display: flex;
+        li {
+          padding: 1rem;
+          a {
+            font-size: 1.15rem;
+            // 當a要做所有style變化時都要經過0.3s，時間函數為ease
+            transition: all 0.3s ease;
+            // 當游標移到a區塊時文字顏色變成yellow(過渡時間為0.3秒)
+            &:hover {
+              color: yellow;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  main {
+    section.main-part {
+      padding: 1rem;
+      display: flex;
+      // flex預設是row(由左而右)，變成由上而下直向排列，
+      flex-direction: column;
+      // 讓文字水平置中
+      text-align: center;
+      // 讓flex items沿著次軸(row)置中
+      align-items: center;
+      h1 {
+        font-size: 3rem;
+      }
+      p {
+        font-size: 1.15rem;
+      }
+
+      div.all-inputs {
+        width: 80vw;
+        form {
+          input.class-type,
+          input.class-number {
+            width: 25vw;
+          }
+
+          input,
+          select {
+            width: 6.6vw;
+            font-size: 1.05rem;
+            // 讓content和border中間多出0.5rem的padding
+            padding: 0.5rem;
+            border: 0.25px solid rgb(37, 37, 37);
+            // 讓每個input,select外面多出0.35rem的margin，讓彼此之間不要那麼近
+            margin: 0.35rem;
+            // 讓外框變得有弧度
+            border-radius: 0.25rem;
+          }
+
+          input.class-credit {
+            width: 7vw;
+          }
+
+          button {
+            width: 1.88vw;
+            border: none;
+            cursor: pointer;
+            // 原本有白色的背景，這邊改成黑色
+            background-color: #272727;
+            i {
+              // 讓icon變大
+              font-size: 1.25rem;
+              // 讓icon不會與游標發生事件(不會讓我們點不到button)
+              pointer-events: none;
+              color: white;
+            }
+          }
+        }
+      }
+
+      button.plus-btn {
+        // 原本有白色的背景，這邊改成黑色
+        background-color: #272727;
+        border: none;
+        width: 2.5rem;
+
+        // 讓這個按鈕與上下方有3rem的距離
+        margin: 3rem 0rem;
+        cursor: pointer;
+        i {
+          // 讓icon size變成2.5rem
+          font-size: 2.5rem;
+          // 讓icon變成白色
+          color: white;
+        }
+      }
+
+      div.result {
+        // 沒設定寬和高的話會照content內容的寬高，會很小
+        width: 200px;
+        height: 200px;
+        // 這裡設定border為red的原因是我們等一下要套的動畫它0%時是red
+        border: 3px solid red;
+        // 讓border變成圓形
+        border-radius: 50%;
+        // 讓文字置中
+        text-align: center;
+        // 套用名為border_color的動畫
+        animation-name: border_color;
+        // 動畫過渡時間為8秒(如果希望顏色變化快一點秒數就設短一點)
+        animation-duration: 8s;
+        // 動畫會執行無限次
+        animation-iteration-count: infinite;
+        p {
+          // 設定p有30px的上margin，讓p與上方的區塊有30px的距離
+          margin-top: 30px;
+        }
+        h2#result-gpa {
+          // 讓h2的字體大小變成3.5rem
+          font-size: 3.5rem;
+          // 讓h2變成粗體字
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}
+
+// 定義一個叫border_color的動畫
+@keyframes border_color {
+  // 當動畫時間在0%(就是一開始)時border-color要是red
+  0% {
+    border-color: red;
+  }
+  // 當動畫時間在33%時border-color要是limegreen
+  33% {
+    border-color: limegreen;
+  }
+  // 當動畫時間在66%時border-color要是yellow
+  66% {
+    border-color: yellow;
+  }
+}
+
+// 讓被加上remove類別的元素變成:
+.remove {
+  // 讓class為remove的元素轉變為scale(0)=>就是變不見
+  transform: scale(0);
+  // class為remove的元素所有轉變(all，也可以設定transform，因為用CSS做樣式改變只有transform)都要0.3s，時間函數為ease
+  transition: all 0.3s ease;
+}
+
+// 定義一個叫做scaleUp的動畫，要套用到newForm上面
+@keyframes scaleUp {
+  // sclae就是縮放，讓newform從sclae(0(完全沒有))，到scale(1(標準大小))
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+// 定義一個叫做scaleDown的動畫，要套用到newButton上面(原本就有的是用.remove的做法)
+@keyframes scaleDown {
+  // sclae就是縮放，讓newform從sclae(0(完全沒有))，到scale(1(標準大小))
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(0);
+  }
+}
